@@ -1,0 +1,72 @@
+Table Layout
+
+Supplies
+--------
+Supply_Id
+Unit Id
+Name_Id
+
+Name
+-------
+Name_Id
+Name(string)
+Ounce(Int)
+Strong Ale(Bool)
+
+Inventory
+--------
+Inventory_Id
+Supply_Id
+Tavern_Id
+date(GETDATE())
+
+Tavern
+-------
+Tavern_Id
+Tavern Name(string)
+Supply_Id
+Amount(Int,Float)
+Paid(Bool)
+date(GETDATE())
+Services Id
+Table Id
+
+Services
+---------
+Services Id
+Service Name(string)
+
+Venues
+-------
+Venue Id
+Venue Names(string)
+Active(Bool)
+
+Discontinue
+-----------
+Discontinue Id
+Name_Id
+Supply_id
+
+Out Of Stock
+---------
+Out Of Stock Id
+Name_Id
+Supply_id
+
+Tables
+---------
+Table Id
+Guest Id
+Amount(Int,Float)
+Paid(Bool)
+date(GETDATE())
+
+Guest
+------
+Guest Id
+Guess Name(string)
+Amount(Int,Float)
+Paid(Bool)
+date(GETDATE())
+
