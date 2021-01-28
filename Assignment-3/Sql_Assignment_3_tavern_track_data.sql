@@ -1,8 +1,9 @@
 DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS Supplies;
 
-DROP TABLE IF EXISTS Locations;
 DROP TABLE IF EXISTS Tavern;
+DROP TABLE IF EXISTS Locations;
+
 DROP TABLE IF EXISTS User_Roles;
 DROP TABLE IF EXISTS Roles;
 DROP TABLE IF EXISTS Users;
@@ -73,10 +74,20 @@ Insert Into Guests (Guess_Name, Birthday, Status_id, Classes_id, level, Guess_No
 --SELECT * FROM Status;
 --SELECT * FROM Classes;
 
+--2 Write a query that returns guests with a birthday before 2000
 Select g.id,g.Guess_Name,g.Birthday, g.level,s.Status_Name,c.Classes_Name,g.Guess_Notes
 from Guests as g
 inner join Status as s on g.Status_id=s.Id
-inner join Classes as c on g.Classes_id=c.Id;
+inner join Classes as c on g.Classes_id=c.Id
+WHERE g.Birthday <= 'January 01, 2000'; 
+
+--4 Write a query that returns UNIQUE guest names.
+select distinct Guess_Name from Guests;
+
+--5 Write a query that returns all guests ordered by name (ascending) Use ASC or DESC after your ORDER BY [col]
+select *
+from Guests
+Order by Guess_Name ASC;
 
 Create table Roles
 (
@@ -138,10 +149,12 @@ Insert Into User_Roles(User_id, Role_id) values
  (11, 1);
 --SELECT * FROM User_Roles;
 
+/*
 Select u.id,u.Users_name,u.Birthday,r.Roles_name
 from Users as u
 inner join User_Roles as ur on u.id=ur.User_id
 inner join Roles as r on r.id=ur.Role_id;
+*/
 
 Create table Supplies
 (
@@ -158,9 +171,20 @@ Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) v
 Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Corona Extra', 'Lager', '24oz', 2.99, 0);
 Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Modelo Especial', 'Imported Beer', '24oz', 2.89, 0);
 Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('San Miguel', 'Imported Beer', '24oz', 3.49, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Soto Super Premium Junmai Daiginjo Sake', 'Sake', '720ml', 39.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('1800 Anejo Tequila', 'Tequila', '750ml', 42.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Don Julio 1942 Tequila', 'Tequila', '750ml', 139.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Tequila Sunrise', 'Tequila', '750ml', 159.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Yuengling Lager', 'Lager', '24oz', 3.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Opus One 2016 Napa Valley Red Blend', 'Red Wine', '750ml', 390.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Emmolo Merlot Napa Valley', 'Merlot', '750ml', 76.99, 0);
+Insert Into Supplies (Supplies_name, Supplies_type, Unit, Price, out_of_stock) values ('Red Horse', 'Imported Beer', '24oz', 3.49, 0);
+--SELECT * FROM Supplies;
 
-SELECT * FROM Supplies;
-
+-- 6  Write a query that returns the top 10 highest price sales
+SELECT TOP 10 * 
+FROM Supplies
+Order by Price DESC;
 
 Create table Service
 (
@@ -179,7 +203,7 @@ Insert Into Service (Service_name, Service_price) values ('Music', 11); --7
 Insert Into Service (Service_name, Service_price) values ('Stand Up', 15); --8
 Insert Into Service (Service_name, Service_price) values ('Stage', 10); --9
 Insert Into Service (Service_name, Service_price) values ('None', 0); --10
-SELECT * FROM Service;
+--SELECT * FROM Service;
 
 Create table Locations
 (
@@ -198,7 +222,7 @@ Insert Into Locations (Locations_name) values
 ('Brooklyn'), --8
 ('Manila'), --9
 ('Vancouver'); --10
-SELECT * FROM Locations;
+--SELECT * FROM Locations;
 
 
 Create table Tavern
@@ -222,8 +246,13 @@ Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Ser
 Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('Top Of the Box', 4, 1, 1, 1, 7, 15);
 Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('Finnegans', 2, 10, 7, 1, 2, 25);
 Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('UCB', 1, 11, 4, 0, 9, 18);
+--SELECT * FROM Tavern;
 
-SELECT * FROM Tavern;
+Select t.id,t.Tavern_name,t.FloorsCount,u.Users_name, l.Locations_name, s.Service_name, t.Table_amount, t.Active
+from Tavern as t
+inner join Users as u on u.id=t.Owner_id
+inner join Locations as l on l.id=t.Location_id
+inner join Service as s on s.id=t.Services_id;
 
 Create table Inventory 
 (
