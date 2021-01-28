@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS Supplies;
-DROP TABLE IF EXISTS Tavern;
 
+DROP TABLE IF EXISTS Locations;
+DROP TABLE IF EXISTS Tavern;
+DROP TABLE IF EXISTS User_Roles;
 DROP TABLE IF EXISTS Roles;
 DROP TABLE IF EXISTS Users;
 
@@ -76,6 +78,71 @@ from Guests as g
 inner join Status as s on g.Status_id=s.Id
 inner join Classes as c on g.Classes_id=c.Id;
 
+Create table Roles
+(
+    id int Primary Key identity(1,1),
+	Roles_name varchar(100),
+);
+
+Insert Into Roles(Roles_name) values ('Owner'); --1
+Insert Into Roles(Roles_name) values ('Manager'); --2
+Insert Into Roles(Roles_name) values ('Chef'); --3
+Insert Into Roles(Roles_name) values ('Waiter'); --4
+Insert Into Roles(Roles_name) values ('Security'); --5
+Insert Into Roles(Roles_name) values ('Janitor'); --6
+Insert Into Roles(Roles_name) values ('Receptionist'); --7
+--SELECT * FROM Roles;
+
+
+Create table Users
+(
+    id int Primary Key identity(1,1),
+	Users_name varchar(100),
+    Birthday date,
+);
+
+Insert Into Users(Users_name, Birthday ) values 
+ ('Christopher Wallace', 'May 21, 1972'),
+ ('Lesane Parish Crooks', 'June 16, 1971'),
+ ('Shawn Corey Carter', 'December 4, 1969'),
+ ('Daniel Dumile', 'July 13, 1971'),
+ ('Nasir Jones', 'September 14, 1973'),
+ ('Moe Szyslak', 'September 24, 1989'),
+ ('Bruce Wayne', 'September 24, 1990'),
+ ('Diana Prince', 'June 24, 2001'),
+ ('Clark Kent', 'July 24, 1989'),
+ ('Harley Quinn', 'July 24, 2008'),
+ ('Pamela Lillian', 'February 14, 1994');
+--SELECT * FROM Users;
+
+Create table User_Roles
+(
+    User_id int,
+    Role_id int,
+);
+
+ALTER TABLE User_Roles ADD FOREIGN KEY (User_id) References Users(id);
+ALTER TABLE User_Roles ADD FOREIGN KEY (Role_id) References Roles(id);
+
+Insert Into User_Roles(User_id, Role_id) values 
+ (1, 1),
+ (2, 2),
+ (3, 5),
+ (4, 7),
+ (5, 1),
+ (6, 1),
+ (7, 4),
+ (8, 3),
+ (9, 5),
+ (10, 1),
+ (11, 1);
+--SELECT * FROM User_Roles;
+
+Select u.id,u.Users_name,u.Birthday,r.Roles_name
+from Users as u
+inner join User_Roles as ur on u.id=ur.User_id
+inner join Roles as r on r.id=ur.Role_id;
+
 Create table Supplies
 (
     id int Primary Key identity(1,1),
@@ -114,58 +181,49 @@ Insert Into Service (Service_name, Service_price) values ('Stage', 10); --9
 Insert Into Service (Service_name, Service_price) values ('None', 0); --10
 SELECT * FROM Service;
 
-Create table Roles
+Create table Locations
 (
     id int Primary Key identity(1,1),
-	Roles_name varchar(100),
+	Locations_name varchar(100),
 );
 
-Insert Into Roles(Roles_name) values ('Owner');
-Insert Into Roles(Roles_name) values ('Manager');
-Insert Into Roles(Roles_name) values ('Chef');
-Insert Into Roles(Roles_name) values ('Waiter');
-Insert Into Roles(Roles_name) values ('Security');
-Insert Into Roles(Roles_name) values ('Janitor');
-Insert Into Roles(Roles_name) values ('Receptionist');
+Insert Into Locations (Locations_name) values 
+('New Yor City'), --1
+('Springfield'), --2
+('San Francisco'), --3
+('Las Vegas'), --4
+('Ronponggi'), --5
+('Philidephia'), --6
+('Trenton'), --7
+('Brooklyn'), --8
+('Manila'), --9
+('Vancouver'); --10
+SELECT * FROM Locations;
 
-SELECT * FROM Roles;
-
-
-Create table Users
-(
-    id int Primary Key identity(1,1),
-	Users_name varchar(100),
-    Birthday date,
-);
-
-Insert Into Users(Users_name, Birthday ) values ('Christopher Wallace', 'May 21, 1972');
-Insert Into Users(Users_name, Birthday ) values ('Lesane Parish Crooks', 'June 16, 1971');
-Insert Into Users(Users_name, Birthday ) values ('Shawn Corey Carter', 'December 4, 1969');
-Insert Into Users(Users_name, Birthday ) values ('Daniel Dumile', 'July 13, 1971');
-Insert Into Users(Users_name, Birthday ) values ('Nasir Jones', 'September 14, 1973');
-Insert Into Users(Users_name, Birthday ) values ('Moe Szyslak', 'September 24, 1989');
-
-SELECT * FROM Users;
 
 Create table Tavern
 (
     id int Primary Key identity(1,1),
 	Tavern_name varchar(100),
+    FloorsCount int,
+    Owner_id int,
+    Location_id int,
 	Active BIT,
     Services_id int,
     Table_amount int,
 );
 
+ALTER TABLE Tavern ADD FOREIGN KEY (Owner_id) References Users(id);
+ALTER TABLE Tavern ADD FOREIGN KEY (Location_id) References Locations(id);
 ALTER TABLE Tavern ADD FOREIGN KEY (Services_id) References Service(id);
 
-Insert Into Tavern (Tavern_name, Active, Services_id, Table_amount) values ('Moes Tavern', 1, 1, 8);
-Insert Into Tavern (Tavern_name, Active, Services_id, Table_amount) values ('The Cellar', 1, 8, 20);
-Insert Into Tavern (Tavern_name, Active, Services_id, Table_amount) values ('Top Of the Box', 1, 7, 15);
-Insert Into Tavern (Tavern_name, Active, Services_id, Table_amount) values ('Finnegans', 1, 2, 25);
-Insert Into Tavern (Tavern_name, Active, Services_id, Table_amount) values ('UCB', 0, 9, 18);
+Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('Moes Tavern', 1, 6, 2, 1, 1, 8);
+Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('The Cellar', 2, 5, 1, 1, 8, 20);
+Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('Top Of the Box', 4, 1, 1, 1, 7, 15);
+Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('Finnegans', 2, 10, 7, 1, 2, 25);
+Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('UCB', 1, 11, 4, 0, 9, 18);
 
 SELECT * FROM Tavern;
-
 
 Create table Inventory 
 (
