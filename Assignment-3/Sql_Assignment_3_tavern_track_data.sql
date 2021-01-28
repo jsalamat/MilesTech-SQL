@@ -81,6 +81,14 @@ inner join Status as s on g.Status_id=s.Id
 inner join Classes as c on g.Classes_id=c.Id
 WHERE g.Birthday <= 'January 01, 2000'; 
 
+--8. Write a query that returns Guest Classes with Levels and Generate a new column with a label for their level grouping (lvl 1-99)
+Select g.id,g.Guess_Name,g.Birthday, g.level,s.Status_Name,c.Classes_Name,g.Guess_Notes
+from Guests as g
+inner join Status as s on g.Status_id=s.Id
+inner join Classes as c on g.Classes_id=c.Id
+WHERE g.level  Between 1 and 99;
+
+
 --4 Write a query that returns UNIQUE guest names.
 select distinct Guess_Name from Guests;
 
