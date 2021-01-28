@@ -275,6 +275,7 @@ Create table Inventory
 ALTER TABLE Inventory ADD FOREIGN KEY (Guests_id) References Guests(id);
 ALTER TABLE Inventory ADD FOREIGN KEY (Supplies_id) References Supplies(id);
 
+-- 9. Write a series of INSERT commands that will insert the statuses of one table into another of your choosing using SELECT statements (See our lab in class - The INSERT commands should be generated).
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 1,2,2,5)
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 3,1,5,1)
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 2,20,1,3)
@@ -282,4 +283,6 @@ Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Suppli
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 3,2,4,2)
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 4,2,3,3)
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 4,2,3,5)
+
+--7. Write a query to return all the values stored in all Lookup Tables - Lookup tables are the tables we reference typically with just an ID and a name. This should be a dynamic combining of all of the tables
 SELECT * FROM Inventory;
