@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS User_Roles;
 DROP TABLE IF EXISTS Roles;
 DROP TABLE IF EXISTS Users;
 
+DROP TABLE IF EXISTS Status;
 DROP TABLE IF EXISTS Guests;
 DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS GuestStatuses;
@@ -39,6 +40,14 @@ CREATE TABLE GuestStatuses
 );
 
 --select * from sysobjects where name = 'Guests';
+--select * from sysobjects where name = 'Status';
+--couldn't add alter codes
+/*
+Msg 1778, Level 16, State 0, Line 45
+Column 'GuestStatuses.id' is not the same data type as referencing column 'Guests.StatusId' in foreign key 'FK__Guests__StatusId__0E8400AF'.
+Msg 1750, Level 16, State 1, Line 45
+Could not create constraint or index. See previous errors.
+*/
 
 ALTER TABLE Guests ADD FOREIGN KEY (StatusId) References GuestStatuses(ID);
 ALTER TABLE Guests ADD FOREIGN KEY (ClassId) References Classes(id);

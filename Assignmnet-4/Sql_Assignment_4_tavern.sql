@@ -15,29 +15,27 @@ DROP TABLE IF EXISTS Service;
 
 CREATE TABLE Guests
 (
-    id int identity(1,1),
+    id int PRIMARY KEY identity(1,1),
 	Guess_Name varchar(250),
+	Guess_Notes varchar(500),
     Birthday date,
+	Cakeday date,
     Status_id int,
     Classes_id int,
-    level int,
-	Guess_Notes varchar(500),
-	PRIMARY KEY (id)
+    level int
 );
 
 
 CREATE TABLE Status
 (
-    id int identity(1,1),
-	Status_Name varchar(250),
-	PRIMARY KEY (id)
+    id int PRIMARY KEY  identity(1,1),
+	Status_Name varchar(250)
 );
 
 CREATE TABLE Classes
 (
-    id int identity(1,1),
-	Classes_Name varchar(250),
-	PRIMARY KEY (id)
+    id int PRIMARY KEY identity(1,1),
+	Classes_Name varchar(250)
 );
 
 ALTER TABLE Guests ADD FOREIGN KEY (Status_id) References Status(ID);
@@ -64,18 +62,18 @@ Insert Into Classes (Classes_Name) values ('lucha libre');  --7
 Insert Into Classes (Classes_Name) values ('strongstyle');  --8
 Insert Into Classes (Classes_Name) values ('rapper');  --9
 
-Insert Into Guests (Guess_Name, Birthday, Status_id, Classes_id, level, Guess_Notes) values ('One Punchman', 'April 1, 2009', 1, 5 , 9999, 'A hero can defeat any opponent with a single punch'); 
-Insert Into Guests (Guess_Name, Birthday, Status_id, Classes_id, level, Guess_Notes) values ('Kenny Omega', 'October 16, 1983', 6, 6 , 99, 'The Bout Machine'); 
-Insert Into Guests (Guess_Name, Birthday, Status_id, Classes_id, level, Guess_Notes) values ('Tetsuya Naito', 'June 22, 1982', 7, 7 , 87, 'Tranquilo' ); 
-Insert Into Guests (Guess_Name, Birthday, Status_id, Classes_id, level, Guess_Notes) values ('Shinsuke Nakamura', 'February 24, 1980', 5, 8 , 100, 'King of Strong Style'); 
-Insert Into Guests (Guess_Name, Birthday, Status_id, Classes_id, level, Guess_Notes) values ('Snoop Dogg', 'October 20, 1971', 10, 9 , 420, 'Whats My Name?'); 
+Insert Into Guests (Guess_Name, Birthday, Cakeday, Status_id, Classes_id, level, Guess_Notes) values ('One Punchman', 'April 1, 2009', 'April 7, 2009', 1, 5 , 9999, 'A hero can defeat any opponent with a single punch'); 
+Insert Into Guests (Guess_Name, Birthday, Cakeday, Status_id, Classes_id, level, Guess_Notes) values ('Kenny Omega', 'October 16, 1983', 'October 21, 1983', 6, 6 , 99, 'The Bout Machine'); 
+Insert Into Guests (Guess_Name, Birthday, Cakeday, Status_id, Classes_id, level, Guess_Notes) values ('Tetsuya Naito', 'June 22, 1982', 'June 27, 1982', 7, 7 , 87, 'Tranquilo' ); 
+Insert Into Guests (Guess_Name, Birthday, Cakeday, Status_id, Classes_id, level, Guess_Notes) values ('Shinsuke Nakamura', 'February 24, 1980', 'February 28, 1980', 5, 8 , 100, 'King of Strong Style'); 
+Insert Into Guests (Guess_Name, Birthday, Cakeday, Status_id, Classes_id, level, Guess_Notes) values ('Snoop Dogg', 'October 20, 1971', 'October 25, 1971', 10, 9 , 420, 'Whats My Name?'); 
 
 --SELECT * FROM Guests;
 --SELECT * FROM Status;
 --SELECT * FROM Classes;
 
 --2 Write a query that returns guests with a birthday before 2000
-Select g.id,g.Guess_Name,g.Birthday, g.level,s.Status_Name,c.Classes_Name,g.Guess_Notes
+Select g.id,g.Guess_Name,g.Birthday,g.Cakeday, g.level,s.Status_Name,c.Classes_Name,g.Guess_Notes
 from Guests as g
 inner join Status as s on g.Status_id=s.Id
 inner join Classes as c on g.Classes_id=c.Id
@@ -117,6 +115,7 @@ Insert Into Roles(Roles_name) values ('Waiter'); --4
 Insert Into Roles(Roles_name) values ('Security'); --5
 Insert Into Roles(Roles_name) values ('Janitor'); --6
 Insert Into Roles(Roles_name) values ('Receptionist'); --7
+Insert Into Roles(Roles_name) values ('Admin'); --8
 --SELECT * FROM Roles;
 
 
@@ -138,7 +137,10 @@ Insert Into Users(Users_name, Birthday ) values
  ('Diana Prince', 'June 24, 2001'),
  ('Clark Kent', 'July 24, 1989'),
  ('Harley Quinn', 'July 24, 2008'),
- ('Pamela Lillian', 'February 14, 1994');
+ ('Pamela Lillian', 'February 14, 1994'),
+ ('Lex Luthor', 'June 11, 1997'),
+ ('Arthur Fleck', 'April 01, 1996'),
+ ('Gorilla Grodd', 'August 07, 1997');
 --SELECT * FROM Users;
 
 Create table User_Roles
@@ -161,7 +163,10 @@ Insert Into User_Roles(User_id, Role_id) values
  (8, 3),
  (9, 5),
  (10, 1),
- (11, 1);
+ (11, 1),
+ (12, 8),
+ (13, 8),
+ (14, 8);
 --SELECT * FROM User_Roles;
 
 /*
