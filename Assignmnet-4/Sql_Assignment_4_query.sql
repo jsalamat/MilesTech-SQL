@@ -49,3 +49,27 @@ Order by g.level  DESC;
 -- Need to update table having issue [Could not create constraint or index. See previous errors.]
 -- 9. Using the additional queries provided, take the lab’s SELECT ‘CREATE query’ and add any IDENTITY and PRIMARY KEY constraints to it.
 -- Need to update table having issue [Could not create constraint or index. See previous errors.] -Broke my data
+
+Select t.id,t.Tavern_name,u.Users_name, l.Locations_name
+from Tavern as t
+inner join Users as u on u.id=t.Owner_id
+inner join Locations as l on l.id=t.Location_id
+inner join Service as s on s.id=t.Services_id;
+
+SELECT * FROM Supplies;
+SELECT * FROM Inventory;
+
+IF OBJECT_ID(N'JSalamat_2021.getSupplySum', N'IF) IS NOT NULL
+	DROP FUNCTION getSupplySum;
+GO
+CREATE FUNCTION JSalamat_2021.getSupplySum (@id int)
+RETURNS int
+AS
+BEGIN
+	Declare @ret int;
+	SELECT @ret = sum(Supplies.Price)
+	FROM Inventory.Suppies_id 
+	WHERE ;
+END; 
+
+SELECT * FROM Supplies.getSupplySum;

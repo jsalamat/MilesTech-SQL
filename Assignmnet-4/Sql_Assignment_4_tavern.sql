@@ -102,6 +102,10 @@ select *
 from Guests
 Order by Guess_Name ASC;
 
+select *
+from Guests
+Order by level ASC;
+
 Create table Roles
 (
     id int Primary Key identity(1,1),
@@ -173,7 +177,8 @@ Insert Into User_Roles(User_id, Role_id) values
 Select u.id,u.Users_name,u.Birthday,r.Roles_name
 from Users as u
 inner join User_Roles as ur on u.id=ur.User_id
-inner join Roles as r on r.id=ur.Role_id;
+inner join Roles as r on r.id=ur.Role_id
+where Roles_name ='Admin';
 */
 
 Create table Supplies
@@ -317,3 +322,14 @@ inner join Users as u on u.id=t.Owner_id
 inner join Locations as l on l.id=t.Location_id
 inner join Service as s on s.id=t.Services_id;
 */
+
+-- 0. Complete the lab to create the SELECT CREATE query!
+
+SELECT CONCAT('CREATE TABLE ', TABLE_NAME, ' (') AS query FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Tavern'
+UNION ALL
+select CONCAT(COLUMN_NAME, ' ', DATA_TYPE,
+(CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NOT NULL THEN  
+CONCAT('(', CAST(CHARACTER_MAXIMUM_LENGTH as varchar(100)), ')') ELSE '' END), ',')
+FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Tavern'
+UNION ALL
+SELECT ');'

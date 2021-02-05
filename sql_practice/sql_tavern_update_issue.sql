@@ -9,8 +9,9 @@ DROP TABLE IF EXISTS User_Roles;
 DROP TABLE IF EXISTS Roles;
 DROP TABLE IF EXISTS Users;
 
-DROP TABLE IF EXISTS Status;
+
 DROP TABLE IF EXISTS Guests;
+DROP TABLE IF EXISTS Status;
 DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS GuestStatuses;
 DROP TABLE IF EXISTS Service;
@@ -23,7 +24,6 @@ CREATE TABLE Guests
     Birthday date,
     Cakeday date,
     StatusId int,
-    ClassId int,
     level int
 );
 
@@ -39,6 +39,15 @@ CREATE TABLE GuestStatuses
 	Name varchar(50)
 );
 
+CREATE TABLE Levels
+(
+    id tinyint PRIMARY KEY IDENTITY(1,1),
+	GuestId int,
+	ClassId int,
+	level int,
+	Date date
+);
+
 --select * from sysobjects where name = 'Guests';
 --select * from sysobjects where name = 'Status';
 --couldn't add alter codes
@@ -49,8 +58,11 @@ Msg 1750, Level 16, State 1, Line 45
 Could not create constraint or index. See previous errors.
 */
 
-ALTER TABLE Guests ADD FOREIGN KEY (StatusId) References GuestStatuses(ID);
-ALTER TABLE Guests ADD FOREIGN KEY (ClassId) References Classes(id);
+-- old alter codes
+--ALTER TABLE Guests ADD FOREIGN KEY (Status_id) References Status(ID);
+--ALTER TABLE Guests ADD FOREIGN KEY (Classes_id) References Classes(ID);
+
+--ALTER TABLE Guests ADD FOREIGN KEY (StatusId) References GuestStatuses(id);
 
 Insert Into GuestStatuses (Name) values ('invincible');  --1
 Insert Into GuestStatuses (Name) values ('paralysis');  --2

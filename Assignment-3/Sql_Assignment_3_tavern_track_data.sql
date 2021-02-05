@@ -88,6 +88,13 @@ inner join Status as s on g.Status_id=s.Id
 inner join Classes as c on g.Classes_id=c.Id
 WHERE g.level  Between 1 and 99;
 
+/*
+Select Guests.Guess_Name, Classes.Classes_Name, Guests.level
+from Guests
+inner join Status on Guests.Status_id=Status.Id
+inner join Classes on Guests.Classes_id=Classes.Id
+Order by Guests.level ASC;
+*/
 
 --4 Write a query that returns UNIQUE guest names.
 select distinct Guess_Name from Guests;
@@ -256,6 +263,18 @@ Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Ser
 Insert Into Tavern (Tavern_name, FloorsCount, Owner_id, Location_id, Active, Services_id, Table_amount) values ('UCB', 1, 11, 4, 0, 9, 18);
 --SELECT * FROM Tavern;
 
+-- 0. Complete the lab to create the SELECT CREATE query!
+/*
+SELECT CONCAT('CREATE TABLE ', TABLE_NAME, ' (') AS query FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Tavern'
+UNION ALL
+select CONCAT(COLUMN_NAME, ' ', DATA_TYPE,
+(CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NOT NULL THEN  
+CONCAT('(', CAST(CHARACTER_MAXIMUM_LENGTH as varchar(100)), ')') ELSE '' END), ',')
+FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Tavern'
+UNION ALL
+SELECT ');'
+*/
+
 Select t.id,t.Tavern_name,t.FloorsCount,u.Users_name, l.Locations_name, s.Service_name, t.Table_amount, t.Active
 from Tavern as t
 inner join Users as u on u.id=t.Owner_id
@@ -283,6 +302,13 @@ Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Suppli
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 3,2,4,2)
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 4,2,3,3)
 Insert Into Inventory (Inventory_Date,Tavern_id, table_number, Guests_id, Supplies_id) values (GETDATE(), 4,2,3,5)
-
---7. Write a query to return all the values stored in all Lookup Tables - Lookup tables are the tables we reference typically with just an ID and a name. This should be a dynamic combining of all of the tables
 SELECT * FROM Inventory;
+--7. Write a query to return all the values stored in all Lookup Tables - Lookup tables are the tables we reference typically with just an ID and a name. This should be a dynamic combining of all of the tables
+
+/*
+Select inv.id,t.Tavern_name,t.FloorsCount,u.Users_name, l.Locations_name, s.Service_name, t.Table_amount, t.Active
+from Inventory as inv
+inner join Users as u on u.id=t.Owner_id
+inner join Locations as l on l.id=t.Location_id
+inner join Service as s on s.id=t.Services_id;
+*/
